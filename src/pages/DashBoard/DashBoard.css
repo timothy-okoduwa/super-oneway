@@ -228,7 +228,7 @@
   height: 50px;
   width: 50px;
   border-radius: 10px;
-  background-color: blue;
+  background-color: rgb(234, 234, 234);
 }
 .times {
   font-size: 12px;

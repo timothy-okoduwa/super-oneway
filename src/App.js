@@ -17,6 +17,7 @@ import Admin from './pages/Admin/Admin';
 import DashBoard from './pages/DashBoard/DashBoard';
 import FreeUpdate from './pages/Update/FreeUpdate';
 import Update from './pages/Update/Update';
+import ScrollToTop from './ScrollToTop';
 
 function App() {
   return (
@@ -78,7 +79,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
+      <ScrollToTop />
       <Footer />
     </UserAuthContextProvider>
   );

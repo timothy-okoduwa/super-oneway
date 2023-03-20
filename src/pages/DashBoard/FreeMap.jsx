@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DashBoard.css';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -13,9 +13,13 @@ import { db,storage } from '../../firebase';
 const ProductItem = ({ product }) => {
   const [isSuseOn, setIsSuseOn] = useState(false);
 
-  const handleToggleSuse = () => {
-    setIsSuseOn((prevIsSuseOn) => !prevIsSuseOn);
-  };
+ 
+
+const handleToggleSuse = () => {
+  setIsSuseOn((prevIsSuseOn) => !prevIsSuseOn || false);
+};
+
+
 
 const handleDelete = async (templateId) => {
   const adminRef = doc(db, 'free', 'free');
@@ -63,40 +67,42 @@ const handleDelete = async (templateId) => {
   await updateDoc(adminRef, { products: updatedProducts });
 };
   return (
-    <div className="holders">
-      <div>
-        <div className="goeh">
-          <div className="imagecard">
-            <img src={product.imageUrls || a} alt="" className="imagecard" />
-          </div>
-          <div className="twooe">
-            <div className="hce">{product.name}</div>
-            <div className="times">
-              {' '}
-              created on {product.dateAdded.toDate().toDateString()}
+    <div>
+      <div className="holders">
+        <div onClick={() => setIsSuseOn(false)}>
+          <div className="goeh">
+            <div className="imagecard">
+              <img src={product.imageUrls || a} alt="" className="imagecard" />
+            </div>
+            <div className="twooe">
+              <div className="hce">{product.name}</div>
+              <div className="times">
+                {' '}
+                created on {product.dateAdded.toDate().toDateString()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className={isSuseOn ? 'leban ' : 'leban hidden'}>
-        <Link
-          to={`/freeupdate/${product.templateId}`}
-          style={{ textDecoration: 'none', color: 'black' }}
-        >
-          <div className="ed">edit template</div>
-        </Link>
+        <div className={isSuseOn ? 'leban ' : 'leban hidden'}>
+          <Link
+            to={`/freeupdate/${product.templateId}`}
+            style={{ textDecoration: 'none', color: 'black' }}
+          >
+            <div className="ed">edit template</div>
+          </Link>
 
-        <div className="ed" onClick={() => handleDelete(product.templateId)}>
-          delete template
+          <div className="ed" onClick={() => handleDelete(product.templateId)}>
+            delete template
+          </div>
         </div>
-      </div>
-      <div className="suse">
-        {' '}
-        <Tooltip title="options">
-          <IconButton onClick={handleToggleSuse}>
-            <BsThreeDotsVertical style={{ fontSize: '17px' }} />
-          </IconButton>
-        </Tooltip>
+        <div className="suse">
+          {' '}
+          <Tooltip title="options">
+            <IconButton onClick={handleToggleSuse}>
+              <BsThreeDotsVertical style={{ fontSize: '17px' }} />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
     </div>
   );

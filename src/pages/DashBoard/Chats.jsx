@@ -51,7 +51,6 @@ const data = [
     free: 4000,
     paid: 2400,
   },
-  
 ];
 
 const monthTickFormatter = (tick) => {
@@ -221,7 +220,3 @@ export default class Example extends PureComponent {
 // }
 
 // export default Downloads;
-
-
-
-

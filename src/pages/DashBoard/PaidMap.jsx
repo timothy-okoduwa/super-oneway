@@ -64,7 +64,7 @@ const handleDelete = async (templateId) => {
 
   return (
     <div className="holders">
-      <div>
+      <div onClick={() => setIsSuseOn(false)}>
         <div className="goeh">
           <div className="imagecard">
             <img src={product.imageUrls || a} alt="" className="imagecard" />
