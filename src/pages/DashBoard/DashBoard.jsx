@@ -84,7 +84,7 @@ const DashBoard = () => {
                     <div className="winkk">
                       <ReactAnimatedNumber
                         value={paidCount + freeCount || 0}
-                        duration={5000}
+                        duration={2000}
                         formatValue={(value) => value.toFixed(0)}
                       />
                     </div>
@@ -111,7 +111,7 @@ const DashBoard = () => {
                       {' '}
                       <ReactAnimatedNumber
                         value={paidCount || 0}
-                        duration={5000}
+                        duration={2000}
                         formatValue={(value) => value.toFixed(0)}
                       />
                     </div>
@@ -139,7 +139,7 @@ const DashBoard = () => {
                       {' '}
                       <ReactAnimatedNumber
                         value={freeCount || 0}
-                        duration={5000}
+                        duration={2000}
                         formatValue={(value) => value.toFixed(0)}
                       />
                     </div>
@@ -169,7 +169,7 @@ const DashBoard = () => {
                   <div className="winkkd px-4">
                     <ReactAnimatedNumber
                       value={free.Downloads || 0}
-                      duration={5000}
+                      duration={2000}
                       formatValue={(value) => value.toFixed(0)}
                     />{' '}
                     <span className="noo">Downloads</span>
@@ -190,7 +190,7 @@ const DashBoard = () => {
                   <div className="winkkd px-4">
                     <ReactAnimatedNumber
                       value={paid.Downloads || 0}
-                      duration={5000}
+                      duration={2000}
                       formatValue={(value) => value.toFixed(0)}
                     />{' '}
                     <span className="noo">Downloads</span>
