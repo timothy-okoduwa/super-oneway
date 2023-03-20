@@ -1,0 +1,51 @@
+.wow {
+  background: #0c0b0b !important;
+  height: 133px !important;
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.flexx {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.vestar {
+  font-weight: bold;
+  font-size: 20px;
+  font-family: "Darker Grotesque", sans-serif;
+}
+.love {
+  font-family: "Darker Grotesque", sans-serif;
+  font-size: 20px;
+}
+.pftt {
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  font-family: "Darker Grotesque", sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .flexx {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .vestar {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .wow {
+    background-color: blueviolet;
+    height: 130px;
+    display: flex;
+    align-items: center;
+  }
+}

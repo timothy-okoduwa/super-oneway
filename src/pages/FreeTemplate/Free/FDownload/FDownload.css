@@ -1,0 +1,66 @@
+.center {
+  text-align: center;
+  color: white;
+  font-family: "Darker Grotesque", sans-serif;
+  font-size: 27px;
+  /* font-weight: 500; */
+}
+.Tempp {
+  background-color: blueviolet;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 7px;
+  text-align: center;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.imgcc {
+  /* background-color: blueviolet; */
+  height: 320px;
+  width: 360px;
+  border-radius: 10px;
+  object-fit: cover;
+  height: 290px;
+  background-color: #ffffff;
+
+}
+
+.cent {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+}
+.buttt {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  font-family: "Darker Grotesque", sans-serif;
+  font-size: 25px !important;
+}
+.otal{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+    font-family: "Darker Grotesque", sans-serif;
+      font-size: 25px !important;
+}
+.Tempp2 {
+  background-color: blueviolet;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 7px;
+  text-align: center;
+  border-radius: 10px;
+  margin-right: 5px;
+     font-size: 23px !important;
+     font-weight: 500;
+}
+@media screen and (max-width:768px){
+  .otal{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+    font-family: "Darker Grotesque", sans-serif;
+      font-size: 19px !important;
+}
+}

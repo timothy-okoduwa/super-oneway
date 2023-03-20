@@ -1,0 +1,25 @@
+.leftt{
+    background-color: white;
+    border-radius: 10px 0 0 10px;
+}
+.log{
+    font-size: 33px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+.wiki{
+   border-radius: 0 10px 10px 0;
+  background-color: #8776F3;
+
+}
+@media screen and (max-width:991px){
+    .wiki{
+ display: none;
+
+}
+.leftt{
+    background-color: white;
+    border-radius: 10px ;
+}
+}

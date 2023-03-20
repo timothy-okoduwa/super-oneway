@@ -1,0 +1,99 @@
+.steadyy {
+  /* padding-top: 80px; */
+  background-color: black;
+}
+.container22 {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.tname {
+  font-weight: bold;
+  font-size: 45px;
+}
+.gistss {
+  display: flex;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+}
+@media screen and (max-width: 991px) {
+  .gistss {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+.vard {
+  /* background-color: red !important; */
+  position: -webkit-sticky !important; /* Safari */
+  position: sticky !important;
+  top: 100px !important;
+  font-family: "Darker Grotesque", sans-serif !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.view {
+  font-family: "Darker Grotesque", sans-serif !important;
+  font-size: 23px !important;
+  color: white;
+}
+.lay {
+  font-family: "Darker Grotesque", sans-serif !important;
+  font-size: 20px !important;
+  color: white;
+  font-weight: bold;
+}
+@media screen and (max-width: 768px) {
+  .dowmm {
+    margin-top: 150px;
+  }
+}
+
+.firstsss {
+   font-family: "Space Grotesk" !important;
+  font-style: normal;
+  font-weight: 800 !important;
+  font-size: 55px !important;
+  text-align: center;
+  /* background-color: red; */
+  margin-top: 40px !important;
+  /* width: 100vw; */
+  color: #ffffff;
+}
+@media screen and (max-width: 991px) {
+  .firstsss {
+font-family: "Space Grotesk" !important;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px !important;
+    text-align: center;
+    /* background-color: red; */
+    margin-top: 150px !important;
+    /* width: 100vw; */
+    color: #ffffff;
+  }
+  .introoo {
+    font-family: "Darker Grotesque" !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    color: #ffffff;
+      font-size: 18px !important;
+  }
+}
+.introoo {
+  font-family: "Darker Grotesque" !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  color: #ffffff;
+
+  font-size: 22px !important;
+}

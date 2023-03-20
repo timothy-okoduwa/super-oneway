@@ -1,0 +1,77 @@
+.push {
+  color: #ffffff !important;
+  width: 70%;
+}
+.dark {
+  /* background-color: #0F0E1F; */
+  color: #ffffff !important;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+  z-index: 1;
+
+  margin-top: -10px;
+  /* background-color: black !important; */
+}
+.nav{
+ display: flex;
+ justify-content: space-between;
+
+  width: 320px;
+}
+.pushs{
+text-align: center;
+  cursor: pointer;
+  color: white;
+    width: fit-content;
+      padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-bottom: 8px;
+}
+.wowww {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+    padding-bottom: 8px;
+ display: flex;
+ justify-content: center;
+  cursor: pointer;
+  color: white;
+    width: fit-content;
+}
+@media screen and (max-width: 991px) {
+  .wowww {
+    /* margin-left: 5px !important; */
+    margin-top: 10px !important;
+    /* margin-bottom: 10px !important; */
+  }
+  .pushs{
+text-align: center;
+  cursor: pointer;
+  color: white;
+    width: fit-content;
+    margin-top: 10px;
+    height: fit-content;
+}
+}
+
+.mainHeader {
+  padding-top: 50px !important;
+  position: fixed !important;
+  width: 100%;
+}
+
+.fixedTop {
+  width: 100%;
+
+  padding-top: 30px !important;
+  position: fixed !important;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.234) !important;
+  /* background: rgb(251, 4, 235); */
+}
+.fixedTop + .main-blockd {
+  padding-top: 102px;
+}
+.nav a.active {
+  border-bottom:3px solid #FFC121;
+  width: fit-content;
+}
