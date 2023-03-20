@@ -34,6 +34,19 @@ const Upload = () => {
   const [info, setInfo] = useState({ error: null, loading: false });
 
   const { loading } = info;
+
+
+
+
+  const [imageError, setImageError] = useState(null);
+
+  const handleInvalidImage = () => {
+    setImageError('Invalid file type. Please upload an image file.');
+  };
+
+
+
+
 const paidAdd = async () => {
   setInfo({ ...info, error: null, loading: true });
 
@@ -216,60 +229,83 @@ const handleImageChange = (event) => {
                     />
                   </div>
                   <div className="push-down container">
-                    <div className=" hiih"> Product Images (Max 15)</div>
+                    <div className="hiih"> Product Images (Max 15)</div>
 
-                    <div className="jikl">
-                      <div className="terapist">
-                        {productImages.length > 0 &&
-                          productImages.map((image, index) => (
-                            <img
-                              key={index}
-                              src={URL.createObjectURL(image)}
-                              alt={`Product mage ${index}`}
-                              className="plsna"
+                    <div className="row jikl">
+                      {productImages.map((image, index) => (
+                        <div className="col-6  " key={index}>
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt={`Product mage ${index}`}
+                            className="tambo img-fluid"
+                            style={{
+                              borderRadius: '9px',
+                              border: '1px solid lightgrey',
+                              objectFit: 'cover',
+                              margin: '5px',
+                              // set image height
+                              width: '100%', // set image width to fill the column
+                            }}
+                            onError={handleInvalidImage}
+                          />
+                        </div>
+                      ))}
+
+                      {productImages.length < 15 && (
+                        <div className="">
+                          <div className="realise">
+                            <Button
+                              variant="outlined"
+                              as="label"
+                              htmlFor="upload"
                               style={{
-                                borderRadius: '9px',
-                                border: '1px solid lightgrey',
-                                objectFit: 'cover',
-                                margin: '5px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                borderRadius: '18px',
                               }}
-                            />
-                          ))}
-                      </div>
+                            >
+                              <BiUpload
+                                style={{
+                                  fontSize: '20px',
+                                  marginRight: '10px',
+                                }}
+                              />
+                              upload image
+                              <Form.Control
+                                id="upload"
+                                type="file"
+                                multiple
+                                required
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={handleImageChange}
+                              />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <div className="realise">
-                      <div className="d-flex justify-content-center">
-                        <Button
-                          variant="outlined"
-                          as="label"
-                          htmlFor="upload"
-                          style={{
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            borderRadius: '18px',
-                          }}
-                        >
-                          <BiUpload
-                            style={{ fontSize: '20px', marginRight: '10px' }}
-                          />
-                          upload image
-                          <Form.Control
-                            id="upload"
-                            type="file"
-                            multiple
-                            required
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            onChange={handleImageChange}
-                          />
-                        </Button>
-                      </div>
-                    </div>
+
+                    {imageError && (
+                      <div className="text-danger">{imageError}</div>
+                    )}
                   </div>
 
                   <div className="d-flex justify-content-center mt-5">
-                    <Button onClick={paidAdd} variant="contained">
+                    <Button
+                      onClick={paidAdd}
+                      variant="contained"
+                      disabled={
+                        !name ||
+                        !price ||
+                        !type ||
+                        !headDist ||
+                        !url ||
+                        !description ||
+                        !selectedImage
+                      }
+                    >
                       {loading ? (
                         <>
                           <span style={{ marginLeft: '10px' }}>
