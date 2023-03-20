@@ -7,6 +7,7 @@ const Footer = () => {
   const isHiddenPage2 =
     location.pathname === '/admin' ||
     location.pathname === '/paidupload' ||
+    location.pathname.startsWith('/createvplus38725') ||
     location.pathname === '/dashboard' ||
     location.pathname.startsWith('/freeupdate/') ||
     location.pathname.startsWith('/paidupdate/') ||

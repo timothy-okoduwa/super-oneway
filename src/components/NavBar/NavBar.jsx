@@ -11,6 +11,7 @@ const NavBar = () => {
     location.pathname === '/admin' ||
     location.pathname === '/paidupload' ||
     location.pathname === '/dashboard' ||
+    location.pathname.startsWith('/createvplus38725') ||
     location.pathname.startsWith('/freeupdate/') ||
     location.pathname.startsWith('/paidupdate/') ||
     location.pathname === '/freeupload';

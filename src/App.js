@@ -3,7 +3,7 @@ import Alerts from './components/Alerts/Alerts';
 import NavBar from './components/NavBar/NavBar';
 import Footer from './pages/Footer/Footer';
 import Home from './pages/Home/Home';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Detailed from './pages/PaidTemplate/TemplateDetailed/Detailed';
 import FHome from './pages/FreeTemplate/Home/FHome';
 import FDetail from './pages/FreeTemplate/Free/FreeDetails/FDetail';
@@ -14,6 +14,7 @@ import ProtectedRoute from './components/wow/ProtectedRoute';
 import Upload from './pages/Upload/Upload';
 import FreeUpload from './pages/Upload/FreeUpload';
 import Admin from './pages/Admin/Admin';
+import CreateAdmin from './pages/Admin/CreateAdmin';
 import DashBoard from './pages/DashBoard/DashBoard';
 import FreeUpdate from './pages/Update/FreeUpdate';
 import Update from './pages/Update/Update';
@@ -70,6 +71,7 @@ function App() {
           }
         />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/createvplus38725" element={<CreateAdmin />} />
 
         <Route
           path="/dashboard"
