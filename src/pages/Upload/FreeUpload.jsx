@@ -203,7 +203,7 @@ const handleImageChange = (event) => {
                     </Form.Select>
                   </Form.Group>
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="banb">Headerdist</Form.Label>
+                    <Form.Label className="banb">Header Description</Form.Label>
                     <Form.Control
                       placeholder=" Headerdist"
                       value={headDist}
