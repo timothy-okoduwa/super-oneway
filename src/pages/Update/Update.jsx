@@ -157,6 +157,7 @@ const Update = () => {
                     <Form.Label className="banb">Price</Form.Label>
                     <Form.Control
                       placeholder="Enter Price"
+                      type='number'
                       defaultValue={product.price}
                       onChange={handleTemplatePriceChange}
                     />

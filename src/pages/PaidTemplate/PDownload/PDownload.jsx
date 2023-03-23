@@ -12,13 +12,14 @@ import {
   updateDoc,
   increment,
 } from 'firebase/firestore';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 import { db } from '../../../firebase';
 const PDownload = () => {
 
  const { templateId } = useParams();
   const [product, setProduct] = useState(null);
  const [business, setBusiness] = useState(null);
-
+const analytics = getAnalytics();
 
 
  const [users, setUsers] = useState([]);
@@ -151,6 +152,10 @@ const userClick = async () => {
                   onClick={() => {
                     move();
                     userClick();
+                    logEvent(analytics, 'free_download', {
+                      item_name: product.name,
+                      item_id: doc(product).id,
+                    });
                   }}
                 >
                   Download
@@ -161,7 +166,8 @@ const userClick = async () => {
               return (
                 <div className="otal">
                   we have a total number of{' '}
-                  <b className="Tempp2 mx-2">{user.Downloads || 0}</b> downloads
+                  <span className=" mx-2">{user.Downloads || 0}</span> paid
+                  downloads
                 </div>
               );
             })}

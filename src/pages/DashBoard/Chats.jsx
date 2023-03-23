@@ -65,7 +65,7 @@ const renderQuarterTick = (tickProps) => {
   const date = new Date(value);
   const month = date.getMonth();
   const quarterNo = Math.floor(month / 3) + 1;
-  const isMidMonth = month % 3 === 1;
+  // const isMidMonth = month % 3 === 1;
 
   if (month % 3 === 1) {
     return <text x={x} y={y - 4} textAnchor="middle">{`Q${quarterNo}`}</text>;
@@ -112,111 +112,10 @@ export default class Example extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="paid" fill="#8884d8" />
+          <Bar dataKey="paid" fill="#000000" />
           <Bar dataKey="free" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
     );
   }
 }
-// import React, { useState, useEffect } from 'react';
-// import ReactDOM from 'react-dom';
-// import { VictoryChart, VictoryScatter } from 'victory';
-// import { range, random } from 'lodash';
-
-// const Chats = () => {
-//   const [scatterData, setScatterData] = useState(getScatterData());
-
-//   useEffect(() => {
-//     const setStateInterval = setInterval(() => {
-//       setScatterData(getScatterData());
-//     }, 3000);
-
-//     return () => clearInterval(setStateInterval);
-//   }, []);
-
-//   function getScatterData() {
-//     const colors = [
-//       'violet',
-//       'cornflowerblue',
-//       'gold',
-//       'orange',
-//       'turquoise',
-//       'tomato',
-//       'greenyellow',
-//     ];
-//     const symbols = [
-//       'circle',
-//       'star',
-//       'square',
-//       'triangleUp',
-//       'triangleDown',
-//       'diamond',
-//       'plus',
-//     ];
-//     return range(25).map((index) => {
-//       const scaledIndex = Math.floor(index % 7);
-//       return {
-//         x: random(10, 50),
-//         y: random(2, 100),
-//         size: random(8) + 3,
-//         symbol: symbols[scaledIndex],
-//         fill: colors[random(0, 6)],
-//         opacity: 0.6,
-//       };
-//     });
-//   }
-
-//   return (
-//     <VictoryChart animate={{ duration: 2000, easing: 'bounce' }}>
-//       <VictoryScatter
-//         data={scatterData}
-//         style={{
-//           data: {
-//             fill: ({ datum }) => datum.fill,
-//             opacity: ({ datum }) => datum.opacity,
-//           },
-//         }}
-//       />
-//     </VictoryChart>
-//   );
-// };
-
-// export default Chats;
-
-// import { useState, useEffect } from 'react';
-// import { collection, getDocs, onSnapshot, doc } from 'firebase/firestore';
-// import { db } from '../../firebase';
-
-// function Downloads() {
-//   const [downloads, setDownloads] = useState([]);
-
-//   useEffect(() => {
-//     const fetchDownloads = async () => {
-//       const downloadsCollectionRef = collection(db, 'free');
-//       const snapshot = await getDocs(downloadsCollectionRef);
-//       const downloads = snapshot.docs.map((doc) => ({
-//         ...doc.data(),
-//         id: doc.id,
-//       }));
-//       setDownloads(downloads);
-//     };
-
-//     fetchDownloads();
-//   }, []);
-
-//   const currentYear = new Date().getFullYear();
-
-//   return (
-//     <div>
-//       {downloads?.[0]?.totalDownloads?.[currentYear]?.map((download) => (
-//         <div key={download.name}>
-//           <p>Name: {download.name}</p>
-//           <p>Count: {download.count}</p>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default Downloads;

@@ -1,9 +1,10 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
-import './Upload.css'
+import './Upload.css';
 import { v4 as uuidv4 } from 'uuid';
-import {BiUpload} from 'react-icons/bi'
+import { BiUpload } from 'react-icons/bi';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   doc,
   updateDoc,
@@ -17,21 +18,24 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { db,storage } from '../../firebase';
+import { db, storage } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import SideBar from '../DashBoard/SideBar';
 const Upload = () => {
-     const navigate = useNavigate();
-     const [productImages, setProductImages] = useState([]);
+  const navigate = useNavigate();
+  const [productImages, setProductImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-const [name,setName]= useState('')
-const [price,setPrice]= useState('')
-const [type,setType]= useState('')
-const [headDist,setHeadDist]= useState('')
-const [url,setUrl]= useState('')
-const [description,setDescription]= useState('')
-const [uploadProgress, setUploadProgress] = useState(0);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [type, setType] = useState('');
+  const [headDist, setHeadDist] = useState('');
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [info, setInfo] = useState({ error: null, loading: false });
+
+  const { loading } = info;
 
   const [imageError, setImageError] = useState(null);
 
@@ -39,101 +43,113 @@ const [uploadProgress, setUploadProgress] = useState(0);
     setImageError('Invalid file type. Please upload an image file.');
   };
 
+  const paidAdd = async () => {
+    setInfo({ ...info, error: null, loading: true });
+setIsButtonClicked(true);
+    // Generate a unique ID for the product and image folders
+    const uuid = uuidv4();
 
-   const { loading } = info;
-const paidAdd = async () => {
-  setInfo({ ...info, error: null, loading: true });
+    const images = [];
+    const uploadTasks = [];
 
-  // Generate a unique ID for the product and image folders
-  const uuid = uuidv4();
+    for (let i = 0; i < productImages.length; i++) {
+      const fileName = productImages[i] ? productImages[i].name : null;
 
-  const images = [];
-  //upload multiple image to firebase storage
-  for (let i = 0; i < productImages.length; i++) {
-    const fileName = productImages[i] ? productImages[i].name : null;
+      if (fileName) {
+        const imagesRef = ref(
+          storage,
+          `images/productImages/${uuid}/${fileName}`
+        );
+        const fileRef = ref(imagesRef);
+        const uploadTask = uploadBytesResumable(fileRef, productImages[i]);
 
-    if (fileName) {
-      const imagesRef = ref(
-        storage,
-        `images/productImages/${uuid}/${fileName}`
-      );
-      const fileRef = ref(imagesRef);
-      const uploadTask = uploadBytesResumable(fileRef, productImages[i]);
+        uploadTasks.push(uploadTask);
 
-      let totalBytesTransferred = 0;
-      let totalBytes = 0;
+        uploadTask.on('state_changed', (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log(`Upload of image ${i} is ${progress}% done`);
+          setUploadProgress((prevProgress) => {
+            const updatedProgress = [...prevProgress];
+            updatedProgress[i] = progress;
+            return updatedProgress;
+          });
+        });
 
-      uploadTask.on('state_changed', (snapshot) => {
-        // Keep track of the total bytes transferred and total bytes of all files
-        totalBytesTransferred += snapshot.bytesTransferred;
-        totalBytes += snapshot.totalBytes;
+        const snapshot = await uploadTask;
+        const downloadURL = await getDownloadURL(snapshot.ref);
 
-        // Calculate the overall progress percentage
-        const progress = Math.round((totalBytesTransferred / totalBytes) * 100);
-        console.log(`Upload is ${progress}% done`);
-        setUploadProgress(progress);
-      });
-
-      const snapshot = await uploadTask;
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      images.push(downloadURL);
+        images.push(downloadURL);
+      }
     }
-  }
 
-  //add the template to firestore
+    // Initialize the upload progress state for all images to be 0%
 
-  const docRef = doc(db, 'paid', 'paid');
-  const docSnap = await getDoc(docRef);
-  const businessData = docSnap.data();
+    //add the template to firestore
 
-  const newProduct = {
-    name: name,
-    price: price,
-    type: type,
-    headDist: headDist,
-    url: url,
-    description: description,
-    dateAdded: Timestamp.fromDate(new Date()),
-    imageUrls: images,
-    templateId: uuid,
+    const docRef = doc(db, 'paid', 'paid');
+    const docSnap = await getDoc(docRef);
+    const businessData = docSnap.data();
+
+    const newProduct = {
+      name: name,
+      price: price,
+      type: type,
+      headDist: headDist,
+      url: url,
+      description: description,
+      dateAdded: Timestamp.fromDate(new Date()),
+      imageUrls: images,
+      templateId: uuid,
+    };
+
+    await updateDoc(docRef, {
+      products: arrayUnion(newProduct),
+    });
+    setName('');
+    setPrice('');
+    setType('');
+    setHeadDist('');
+    setDescription('');
+
+    navigate('/dashboard');
+  };
+  useEffect(() => {
+    setUploadProgress(new Array(productImages.length).fill(0));
+  }, [productImages]);
+
+  const handleImageChange = (event) => {
+    const images = [];
+    const maxImages = 15; // maximum number of images
+
+    if (event.target.files.length > maxImages) {
+      alert('Sorry, you can only upload up to 15 images');
+      for (let i = 0; i < maxImages; i++) {
+        const file = event.target.files[i];
+        const imgUrl = URL.createObjectURL(file);
+        setSelectedImage(imgUrl);
+        images.push(file);
+      }
+    } else {
+      for (let i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        const imgUrl = URL.createObjectURL(file);
+        setSelectedImage(imgUrl);
+        images.push(file);
+      }
+    }
+
+    setProductImages(images);
   };
 
-  await updateDoc(docRef, {
-    products: arrayUnion(newProduct),
-  });
-  setName('');
-  setPrice('');
-  setType('');
-  setHeadDist('');
-  setDescription('');
-
-  navigate('/dashboard');
-};
-
-const handleImageChange = (event) => {
-  const images = [];
-  const maxImages = 15; // maximum number of images
-
-  if (event.target.files.length > maxImages) {
-    alert('Sorry, you can only upload up to 15 images');
-    for (let i = 0; i < maxImages; i++) {
-      const file = event.target.files[i];
-      const imgUrl = URL.createObjectURL(file);
-      setSelectedImage(imgUrl);
-      images.push(file);
-    }
-  } else {
-    for (let i = 0; i < event.target.files.length; i++) {
-      const file = event.target.files[i];
-      const imgUrl = URL.createObjectURL(file);
-      setSelectedImage(imgUrl);
-      images.push(file);
-    }
-  }
-
-  setProductImages(images);
-};
+  const handleDeleteImage = (index, event) => {
+    const updatedImages = [...productImages];
+    updatedImages.splice(index, 1);
+    setProductImages(updatedImages);
+    // add this line to prevent the default form submission behavior
+    event.stopPropagation();
+  };
 
   return (
     <>
@@ -172,10 +188,11 @@ const handleImageChange = (event) => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="banb">Price</Form.Label>
+                    <Form.Label className="banb">paid Price</Form.Label>
                     <Form.Control
-                      placeholder="Enter Price"
+                      placeholder="Enter paid Price"
                       value={price}
+                      type='number'
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </Form.Group>
@@ -226,7 +243,13 @@ const handleImageChange = (event) => {
 
                     <div className="row jikl">
                       {productImages.map((image, index) => (
-                        <div className="col-6  " key={index}>
+                        <div
+                          className="col-6"
+                          key={index}
+                          style={{
+                            position: 'relative',
+                          }}
+                        >
                           <img
                             src={URL.createObjectURL(image)}
                             alt={`Product mage ${index}`}
@@ -236,11 +259,50 @@ const handleImageChange = (event) => {
                               border: '1px solid lightgrey',
                               objectFit: 'cover',
                               margin: '5px',
-                              // set image height
-                              width: '100%', // set image width to fill the column
+                              width: '100%',
                             }}
                             onError={handleInvalidImage}
                           />
+                          <div
+                            style={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                            }}
+                          >
+                            <div
+                              className="pRogress"
+                              style={{
+                                background: '#E9ECEF',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '40px',
+                                width: '40px',
+                              }}
+                            >
+                              {uploadProgress[index] > 0 && (
+                                <CircularProgress
+                                  style={{ height: '25px', width: '25px' }}
+                                  variant="determinate"
+                                  value={uploadProgress[index]}
+                                />
+                              )}
+                              {/* {uploadProgress[index]}% */}
+                            </div>
+                          </div>
+                          {!isButtonClicked && (
+                            <div
+                              className="bubu"
+                              onClick={(event) =>
+                                handleDeleteImage(event, index)
+                              }
+                            >
+                              X
+                            </div>
+                          )}
                         </div>
                       ))}
 
@@ -284,6 +346,7 @@ const handleImageChange = (event) => {
                       <div className="text-danger">{imageError}</div>
                     )}
                   </div>
+
                   <div className="d-flex justify-content-center mt-5">
                     <Button
                       onClick={paidAdd}
@@ -300,12 +363,26 @@ const handleImageChange = (event) => {
                     >
                       {loading ? (
                         <>
-                          <span style={{ marginLeft: '10px' }}>
-                            Upload is {uploadProgress}% done
+                          <span
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}
+                          >
+                            Uploading{' '}
+                            <CircularProgress
+                              style={{
+                                height: '25px',
+                                width: '25px',
+                                color: 'white',
+                                marginLeft: '10px',
+                              }}
+                            />
                           </span>
                         </>
                       ) : (
-                        <>add Template</>
+                        'upload '
                       )}
                     </Button>
                   </div>
@@ -318,6 +395,6 @@ const handleImageChange = (event) => {
       </div>
     </>
   );
-}
+};
 
-export default Upload
+export default Upload;

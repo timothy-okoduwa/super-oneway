@@ -8,13 +8,13 @@ import {
   getDocs,
   doc,
   collection,
-  setDoc,
   getDoc,
   updateDoc,
   increment,
   Timestamp,
 } from 'firebase/firestore';
 import { db } from '../../../../firebase';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 const FDownload = () => {
   const { templateId } = useParams();
@@ -25,6 +25,8 @@ const [business, setBusiness] = useState(null);
 
  const [users, setUsers] = useState([]);
 const usersCollectionRef = collection(db, 'free');
+
+const analytics = getAnalytics();
 
  useEffect(() => {
    const getUsers = async () => {
@@ -135,12 +137,17 @@ const userClick = async () => {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'white' }}
               >
+              
                 <Button
                   type="submit"
                   className="mt-2"
                   onClick={() => {
                     move();
                     userClick();
+                    logEvent(analytics, 'paid_download', {
+                      item_name: product.name,
+                      item_id: doc(product).id,
+                    });
                   }}
                 >
                   Download
@@ -151,7 +158,7 @@ const userClick = async () => {
               return (
                 <div className="otal">
                   we have a total number of{' '}
-                  <b className="Tempp2 mx-2">{user.Downloads || 0}</b> downloads
+                  <span className=" mx-2">{user.Downloads || 0}</span> free downloads
                 </div>
               );
             })}

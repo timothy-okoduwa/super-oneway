@@ -96,3 +96,22 @@
   color: black;
   font-weight: 400;
 }
+
+
+.bubu {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #888888e3;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+ font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 9px;
+  cursor: pointer;
+}
