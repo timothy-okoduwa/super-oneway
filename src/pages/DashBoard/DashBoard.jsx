@@ -162,7 +162,7 @@ const DashBoard = () => {
             <div className="col-12 col-lg-4 mb-4">
               <div className="boxx container">
                 <div className="headerr pt-4 px-4">
-                  Total downloads for <br />
+                   Total downloads for <br />
                   Free Template
                 </div>
                 <div className="chartss">
