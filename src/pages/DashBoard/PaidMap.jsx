@@ -121,9 +121,21 @@ const PaidMap = () => {
   }, []);
   if (loading) {
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '67px',
+        }}
+      >
         <CircularProgress
-          style={{ width: '70px', height: '70px', color: 'black' }}
+          style={{
+            width: '35px',
+            height: '35px',
+            color: 'black',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         />
       </div>
     );
